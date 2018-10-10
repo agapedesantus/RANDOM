@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "262559198317",
+    "firebase_url": "https://sdb2-d1695.firebaseio.com",
+    "project_id": "sdb2-d1695",
+    "storage_bucket": "sdb2-d1695.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:262559198317:android:d3fccf0b57e9fd78",
+        "android_client_info": {
+          "package_name": "com.example.agape.sdb_skudeybore"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "262559198317-4ioi9qrsqmti5a73e7vh71n4tkstklgi.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.agape.sdb_skudeybore",
+            "certificate_hash": "20c96345ec0213c7e2b20c86cab6d29e5754f8b1"
+          }
+        },
+        {
+          "client_id": "262559198317-drsnammebeijgn9b8hpmdktqm9fm6uvl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCXcDxcxBRLLF3g2Y5eiREgtefB-oo_dBM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "262559198317-drsnammebeijgn9b8hpmdktqm9fm6uvl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
