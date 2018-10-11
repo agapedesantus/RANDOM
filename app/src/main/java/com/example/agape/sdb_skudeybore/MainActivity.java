@@ -7,6 +7,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -75,25 +76,42 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 EditText input = findViewById(R.id.input);
-                FirebaseDatabase.getInstance().getReference().push().setValue(new ChatMessage(input.getText().toString(),
-                        FirebaseAuth.getInstance().getCurrentUser().getEmail()));
-                input.setText("");
+                final String email = (FirebaseAuth.getInstance().getCurrentUser() != null &&
+                        FirebaseAuth.getInstance().getCurrentUser().getEmail() != null) ?
+                        FirebaseAuth.getInstance().getCurrentUser().getEmail() : "";
+
+                if(input.getText() != null && !email.isEmpty()) {
+                    final ChatMessage message = new ChatMessage(input.getText().toString(), email);
+                    FirebaseDatabase.getInstance().getReference().child("/messages").push().setValue(message);
+                    input.setText("");
+                }
             }
         });
 
         //check if sign-in then navigate signin page
         if (FirebaseAuth.getInstance().getCurrentUser() == null) {
-            startActivityForResult(AuthUI.getInstance().createSignInIntentBuilder().build(), SIGN_IN_REQUEST_CODE);
+            launchAuthUIActivity();
         } else {
+            Log.i("Firebase user is ", "Current user is "+FirebaseAuth.getInstance().getCurrentUser());
             Snackbar.make(activity_main, "Welcome " + FirebaseAuth.getInstance().getCurrentUser().getEmail(), Snackbar.LENGTH_LONG).show();
             displayChatMessage();
+        }
+    }
+
+    public void launchAuthUIActivity() {
+        try{
+            startActivityForResult(AuthUI.getInstance().createSignInIntentBuilder().build(), SIGN_IN_REQUEST_CODE);
+        } catch (Exception e) {
+            Log.e(MainActivity.class.getSimpleName(), e.getMessage());
+        } finally {
+            Log.i(MainActivity.class.getSimpleName(), "Inside finally block now, do something?");
         }
     }
 
     public void displayChatMessage() {
         ListView listOfMessage = findViewById(R.id.list_of_message);
         adapter = new FirebaseListAdapter<ChatMessage>(this, ChatMessage.class,R.layout.list_item,FirebaseDatabase
-                .getInstance().getReference()) {
+                .getInstance().getReference("/messages")) {
             @Override
             protected void populateView(View v, ChatMessage model, int position) {
                 TextView messageText, messageUser, messageTime;
